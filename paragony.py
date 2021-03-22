@@ -37,13 +37,23 @@ def format_price(price):
     return f'{zl}.{gr:02}'
 
 
+def print_product(current_position, product):
+    name, price = product
+    price = format_price(price)
+    tax_group = get_tax_group(name)
+    print(f'{current_position:2}. {name:17} {price:>6} {tax_group}')
+
+
 def print_receipt(date, receipt):
+    if (not receipt):
+        print('Receipt is empty!')
+        return
+
     print(date)
 
     current_position = 1
-    for name, price in receipt:
-        price = format_price(price)
-        print(f'{current_position:2}. {name:19} {price:>6}')
+    for product in receipt:
+        print_product(current_position, product)
         current_position += 1
 
     print('-' * 30)
@@ -53,10 +63,24 @@ def print_receipt(date, receipt):
     print(f'TOTAL: {formatted_value:>23}')
 
 
+def get_tax_group(product):
+    tax_group_A = {'Milk', 'Bread'}
+    tax_group_B = {'Bananas', 'Oranges'}
+
+    if (product in tax_group_A):
+        return 'A'
+    elif (product in tax_group_B):
+        return 'B'
+    else:
+        return 'E'
+
+
 receipt = [
     ('Bananas', 499),
-    ('Oranges', 803),
-    ('Milk', 315)
+    ('Oranges', 1803),
+    ('Milk', 315),
+    ('Lollipop', 100)
 ]
 
+# print(get_tax_group('Plums'))
 print_receipt('2021-03-22', receipt)
