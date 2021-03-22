@@ -6,9 +6,9 @@ def split_price(price):
 
 
 def get_description(name, price):
-    price_parts = split_price(price)
+    zl, gr = split_price(price)
 
-    return f'Price of {name} is {price_parts[0]}.{price_parts[1]:02}'
+    return f'Price of {name} is {zl}.{gr:02}'
 
 
 def print_description(name, price):
@@ -25,8 +25,8 @@ def get_product():
 
 def get_total_price(receipt):
     total_value = 0
-    for element in receipt:
-        total_value += element[1]
+    for name, price in receipt:
+        total_value += price
 
     return total_value
 
@@ -37,12 +37,26 @@ def format_price(price):
     return f'{zl}.{gr:02}'
 
 
+def print_receipt(date, receipt):
+    print(date)
+
+    current_position = 1
+    for name, price in receipt:
+        price = format_price(price)
+        print(f'{current_position:2}. {name:19} {price:>6}')
+        current_position += 1
+
+    print('-' * 30)
+
+    total_value = get_total_price(receipt)
+    formatted_value = format_price(total_value)
+    print(f'TOTAL: {formatted_value:>23}')
+
+
 receipt = [
     ('Bananas', 499),
     ('Oranges', 803),
     ('Milk', 315)
 ]
 
-
-my_total_value = get_total_price(receipt)
-print(format_price(my_total_value))
+print_receipt('2021-03-22', receipt)
