@@ -17,10 +17,18 @@ def print_description(name, price):
 
 
 def get_product():
-    name = input('Enter product name: ')
-    price = input('Enter product price: ')
+    product_prices = {
+        'Bananas': 499,
+        'Oranges': 1803,
+        'Milk': 315,
+        'Lollipop': 100,
+        'Bread': 509
+    }
 
-    return (name, int(price))
+    name = input('Enter product name: ')
+    amount = input('Enter amount: ')
+
+    return (name, int(amount) * product_prices.get(name, 0))
 
 
 def get_total_price(receipt):
@@ -75,12 +83,15 @@ def get_tax_group(product):
         return 'E'
 
 
-receipt = [
-    ('Bananas', 499),
-    ('Oranges', 1803),
-    ('Milk', 315),
-    ('Lollipop', 100)
-]
+# receipt = [
+#     ('Bananas', 499),
+#     ('Oranges', 1803),
+#     ('Milk', 315),
+#     ('Lollipop', 100)
+# ]
 
-# print(get_tax_group('Plums'))
+receipt = []
+for i in range(6):
+    receipt.append(get_product())
+
 print_receipt('2021-03-22', receipt)
