@@ -66,9 +66,16 @@ def print_receipt(date, receipt):
 
     print('-' * 30)
 
+    total_tax_value = get_total_tax(receipt)
+    formatted_value = format_price(total_tax_value)
+    print(f'TAX: {formatted_value:>25}')
+
     total_value = get_total_price(receipt)
     formatted_value = format_price(total_value)
     print(f'TOTAL: {formatted_value:>23}')
+
+    formatted_value = format_price(total_tax_value + total_value)
+    print(f'TOTAL+TAX: {formatted_value:>19}')
 
 
 def get_tax_group(product):
@@ -83,15 +90,30 @@ def get_tax_group(product):
         return 'E'
 
 
-# receipt = [
-#     ('Bananas', 499),
-#     ('Oranges', 1803),
-#     ('Milk', 315),
-#     ('Lollipop', 100)
-# ]
+def get_total_tax(receipt):
+    tax_values = {
+        'A': 12,
+        'B': 8,
+        'E': 22,
+    }
 
-receipt = []
-for i in range(6):
-    receipt.append(get_product())
+    total_value = 0
+    for name, price in receipt:
+        tax_group = get_tax_group(name)
+        total_value += price * tax_values.get(tax_group)
+
+    return round(total_value / 100)
+
+
+receipt = [
+    ('Bananas', 499),
+    ('Oranges', 1803),
+    ('Milk', 315),
+    ('Lollipop', 100)
+]
+
+# receipt = []
+# for i in range(6):
+#     receipt.append(get_product())
 
 print_receipt('2021-03-22', receipt)
