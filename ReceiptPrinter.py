@@ -1,3 +1,5 @@
+from datetime import date
+
 def split_price(price):
     price_zl = price // 100
     price_gr = price % 100
@@ -24,6 +26,8 @@ def get_product():
         'Lollipop': 100,
         'Bread': 509
     }
+
+    print(product_prices)
 
     name = input('Enter product name: ')
     amount = input('Enter amount: ')
@@ -105,15 +109,16 @@ def get_total_tax(receipt):
     return round(total_value / 100)
 
 
-receipt = [
-    ('Bananas', 499),
-    ('Oranges', 1803),
-    ('Milk', 315),
-    ('Lollipop', 100)
-]
+if __name__ == "__main__":
+    # receipt = [
+    #     ('Bananas', 499),
+    #     ('Oranges', 1803),
+    #     ('Milk', 315),
+    #     ('Lollipop', 100)
+    # ]
 
-# receipt = []
-# for i in range(6):
-#     receipt.append(get_product())
+    receipt = []
+    for i in range(3):
+        receipt.append(get_product())
 
-print_receipt('2021-03-22', receipt)
+    print_receipt(date.today(), receipt)
